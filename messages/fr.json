@@ -1,0 +1,164 @@
+{
+    "tabTitle": {
+        "home": "Créer une application Next"
+    },
+    "header": {
+        "title": {
+            "firstName": "ATLANTIC",
+            "lastName": "MACHINERIE & ÉQUIPEMENTS"
+        },
+        "nav": {
+            "home": "Accueil",
+            "about": "À propos",
+            "category": "Catégorie",
+            "brands": "Marques",
+            "contact": "Contactez-nous"
+        }
+    },
+    "homePage": {
+        "heroSection": {
+            "titlePrimary": "Bienvenue chez Atlantic Machinerie & Équipements",
+            "titleSecondary": "Des machines haut de gamme,",
+            "titleThird": "Conçues pour la performance.",
+            "description": "Votre passerelle vers l'excellence industrielle, offrant innovation, efficacité et fiabilité grâce à des solutions de pointe pour une croissance durable et un succès à long terme."
+        },
+        "brandSection": {
+            "title1": "Nos",
+            "title2": "Partenaires",
+            "title3": "de marque"
+        },
+        "categorySection": {
+            "titlePrimary": "Choisissons",
+            "titleSecondary1": "Choisissez votre",
+            "titleSecondary2": "Produit",
+            "titleSecondary3": "Catégorie",
+            "categoryDropdownName": "Sélectionner une catégorie",
+            "categoryDropdownValue": "Tous",
+            "subcategory": "Sélectionner une sous-catégorie",
+            "showing":"Affichage",
+            "of":"de",
+            "products":"produits"
+        },
+        "aboutSection": {
+            "titlePrimary": "À propos",
+            "titleSecondary1": "Leaders en",
+            "titleSecondary2": "Machinerie & Équipements.",
+            "description": "Atlantic Machinery est un leader mondial des solutions d'équipements innovantes et de haute qualité, garantissant fiabilité, efficacité et excellence pour répondre aux divers besoins industriels avec une technologie avancée et des performances supérieures.",
+            "features": {
+                "companyLegality": {
+                    "title": "Légalité de l'entreprise",
+                    "description": "La légalité d'une entreprise fait référence à sa conformité aux lois, réglementations et exigences en matière de licences pour opérer légalement dans son secteur et sa juridiction."
+                },
+                "equipmentLegality": {
+                    "title": "Légalité des équipements",
+                    "description": "La légalité des équipements garantit la conformité aux réglementations, empêchant les avantages injustes, les risques de sécurité et les violations des règles pour les concurrents."
+                },
+                "operatorLegality": {
+                    "title": "Légalité de l'opérateur",
+                    "description": "La légalité de l'opérateur garantit la conformité aux lois, réglementations et normes éthiques régissant les opérations, la sécurité et les responsabilités."
+                }
+            }
+        },
+        "contactSection": {
+            "titlePrimary": "Contact",
+            "titleSecondary": "Bonjour. Nous sommes là si vous avez besoin de nous.",
+            "titleTertiary": "Posez-nous toutes vos questions",
+            "location": "N° 57A, rue Madison, Baltimore, MD, USA 4807",
+            "email": "abc@gmail.com",
+            "phone": "+99-01548975148",
+            "from": {
+                "name": {
+                    "lebelName": "Nom complet",
+                    "placeName": "Entrez votre nom complet"
+                },
+                "email": {
+                    "lebelName": "Adresse e-mail",
+                    "placeName": "Entrez votre adresse e-mail"
+                },
+                "Address": {
+                    "lebelName": "Adresse",
+                    "placeName": "Entrez votre adresse"
+                },
+                "Contact_Number": {
+                    "lebelName": "Numéro de contact",
+                    "placeName": "Entrez votre numéro de contact"
+                },
+                "Comment": {
+                    "lebelName": "Commentaires",
+                    "placeName": "Écrivez ici..."
+                },
+                "button": "Envoyer le message"
+            }
+        },
+        "offerSection": {
+            "titlePrimary": "Ce que nous offrons",
+            "titleSecondary1": "Profitez",
+            "titleSecondary2": "d'un service fiable et efficace",
+            "titleSecondary3": "avec chaque location.",
+            "description": "Profitez d'un service fiable et efficace à chaque location. Nous privilégions la fiabilité, la satisfaction client et des expériences fluides, garantissant un processus sans tracas adapté à vos besoins.",
+            "features": {
+                "deliveryPickup": {
+                    "title": "Livraison & Retrait",
+                    "description": "Profitez d'options de livraison ou de retrait rapides et pratiques. Commandez en ligne, choisissez votre méthode préférée et recevez vos articles en toute simplicité, à domicile ou en magasin."
+                },
+                "maintenanceRepair": {
+                    "title": "Maintenance & Réparation des équipements",
+                    "description": "Un entretien régulier et des réparations opportunes garantissent l'efficacité, la longévité et la sécurité des équipements. Des inspections adéquates, une lubrification et le remplacement des pièces évitent les pannes et réduisent les coûts opérationnels."
+                },
+                "onSiteSupport": {
+                    "title": "Support sur site",
+                    "description": "Le support sur site garantit une résolution rapide des problèmes, la maintenance des systèmes et une assistance technique, améliorant la productivité et minimisant les interruptions."
+                }
+            }
+        },
+       "faqSection": {
+    "titlePrimary": "FAQ",
+    "titleSecondary1": "Obtenez",
+    "titleSecondary2": "des Réponses",
+    "titleSecondary3": "à Vos Questions.",
+    "description": "Avez-vous besoin d'aide ou avez-vous des questions sur des fonctionnalités spécifiques ?",
+    
+    "questions1": {
+        "question1": "En quoi votre entreprise est-elle spécialisée ?",
+        "answer1": "Nous sommes spécialisés dans la fourniture de machines et d'équipements de haute qualité pour les secteurs de la construction, de l'agriculture, de l'exploitation minière et de la fabrication industrielle, garantissant efficacité, fiabilité et productivité aux entreprises."
+    },
+    "questions2": {
+        "question2": "Quels sont les secteurs que votre entreprise dessert ?",
+        "answer2": "Nous sommes spécialisés dans la fourniture de machines et d'équipements de haute qualité pour les secteurs de la construction, de l'agriculture, de l'exploitation minière et de la fabrication industrielle, garantissant efficacité, fiabilité et productivité aux entreprises."
+    },
+    "questions3": {
+        "question3": "Puis-je demander une démonstration de produit ?",
+        "answer3": "Oui, nous proposons des démonstrations complètes de tous nos équipements. Vous pouvez programmer une démonstration via notre site web ou en contactant directement notre équipe commerciale."
+    },
+    "questions4": {
+        "question4": "Proposez-vous un service après-vente ?",
+        "answer4": "Oui, nous offrons un service après-vente complet comprenant la maintenance, les réparations, l'assistance technique et la disponibilité des pièces de rechange pour garantir que votre équipement fonctionne à des performances optimales."
+    }
+}
+
+    },
+
+    "footerSection": {
+    "description": "Passerelle vers l'excellence industrielle, offrant innovation, efficacité et fiabilité avec des solutions de pointe pour une croissance durable et un succès à long terme.",
+    "equipment": "Équipement",
+    "equipmentCategories": {
+        "construction": "Construction",
+        "utility": "Pétrole, Gaz, Électricité & Services publics",
+        "marine": "Marine, Aéronautique, Ferroviaire",
+        "handling": "Levage & Manutention",
+        "aggregate": "Agrégats"
+    },
+    "legal": {
+        "title":"légale",
+        "privacy": "Politique de confidentialité",
+        "terms": "Conditions générales"
+    },
+    "contact": {
+        "title":"contacto",
+        "email": "abc@gmail.com",
+        "phone": "+99-01548975148"
+    }
+}
+
+
+}

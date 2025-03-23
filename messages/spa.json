@@ -1,0 +1,162 @@
+{
+    "tabTitle": {
+        "home": "Crear una aplicación Next"
+    },
+    "header": {
+        "title": {
+            "firstName": "ATLANTIC",
+            "lastName": "MAQUINARIA & EQUIPOS"
+        },
+        "nav": {
+            "home": "Inicio",
+            "about": "Acerca de",
+            "category": "Categoría",
+            "brands": "Marcas",
+            "contact": "Contáctanos"
+        }
+    },
+    "homePage": {
+        "heroSection": {
+            "titlePrimary": "Bienvenido a Atlantic Maquinaria & Equipos",
+            "titleSecondary": "Maquinaria de primera calidad,",
+            "titleThird": "Diseñada para el rendimiento.",
+            "description": "Tu puerta de entrada a la excelencia industrial, ofreciendo innovación, eficiencia y confiabilidad con soluciones de vanguardia para un crecimiento sostenible y éxito a largo plazo."
+        },
+        "brandSection": {
+            "title1": "Nuestros",
+            "title2": "Socios",
+            "title3": "de marca"
+        },
+        "categorySection": {
+            "titlePrimary": "Elige",
+            "titleSecondary1": "Selecciona tu",
+            "titleSecondary2": "Producto",
+            "titleSecondary3": "Categoría",
+            "categoryDropdownName": "Seleccionar categoría",
+            "categoryDropdownValue": "Todos",
+            "subcategory": "Seleccionar subcategoría",
+            "showing":"Demostración",
+            "of":"de",
+            "products":"productos"
+        },
+        "aboutSection": {
+            "titlePrimary": "Acerca de",
+            "titleSecondary1": "Líderes en",
+            "titleSecondary2": "Maquinaria & Equipos.",
+            "description": "Atlantic Machinery es un líder global en soluciones de equipos innovadores y de alta calidad, garantizando confiabilidad, eficiencia y excelencia para satisfacer diversas necesidades industriales con tecnología avanzada y un rendimiento superior.",
+            "features": {
+                "companyLegality": {
+                    "title": "Legalidad de la empresa",
+                    "description": "La legalidad de una empresa se refiere a su cumplimiento con las leyes, regulaciones y requisitos de licencia para operar legalmente en su industria y jurisdicción."
+                },
+                "equipmentLegality": {
+                    "title": "Legalidad de los equipos",
+                    "description": "La legalidad de los equipos garantiza el cumplimiento de las regulaciones, evitando ventajas injustas, riesgos de seguridad y violaciones de normas para los competidores."
+                },
+                "operatorLegality": {
+                    "title": "Legalidad del operador",
+                    "description": "La legalidad del operador asegura el cumplimiento de las leyes, regulaciones y normas éticas que rigen las operaciones, la seguridad y las responsabilidades."
+                }
+            }
+        },
+        "contactSection": {
+            "titlePrimary": "Contacto",
+            "titleSecondary": "Hola. Estamos aquí si nos necesitas.",
+            "titleTertiary": "Haznos cualquier pregunta",
+            "location": "N° 57A, Calle Madison, Baltimore, MD, EE.UU. 4807",
+            "email": "abc@gmail.com",
+            "phone": "+99-01548975148",
+            "from": {
+                "name": {
+                    "lebelName": "Nombre completo",
+                    "placeName": "Ingresa tu nombre completo"
+                },
+                "email": {
+                    "lebelName": "Correo electrónico",
+                    "placeName": "Ingresa tu correo electrónico"
+                },
+                "Address": {
+                    "lebelName": "Dirección",
+                    "placeName": "Ingresa tu dirección"
+                },
+                "Contact_Number": {
+                    "lebelName": "Número de contacto",
+                    "placeName": "Ingresa tu número de contacto"
+                },
+                "Comment": {
+                    "lebelName": "Comentarios",
+                    "placeName": "Escribe aquí..."
+                },
+                "button": "Enviar mensaje"
+            }
+        },
+        "offerSection": {
+            "titlePrimary": "Lo que ofrecemos",
+            "titleSecondary1": "Disfruta",
+            "titleSecondary2": "de un servicio confiable y eficiente",
+            "titleSecondary3": "con cada alquiler.",
+            "description": "Disfruta de un servicio confiable y eficiente en cada alquiler. Priorizamos la confiabilidad, la satisfacción del cliente y experiencias sin problemas, asegurando un proceso sin complicaciones adaptado a tus necesidades.",
+            "features": {
+                "deliveryPickup": {
+                    "title": "Entrega & Recogida",
+                    "description": "Disfruta de opciones rápidas y convenientes de entrega o recogida. Ordena en línea, elige tu método preferido y recibe tus artículos fácilmente, ya sea en casa o en la tienda."
+                },
+                "maintenanceRepair": {
+                    "title": "Mantenimiento & Reparación de equipos",
+                    "description": "El mantenimiento regular y las reparaciones oportunas aseguran la eficiencia, longevidad y seguridad de los equipos. Las inspecciones adecuadas, la lubricación y el reemplazo de piezas previenen fallas y reducen los costos operativos."
+                },
+                "onSiteSupport": {
+                    "title": "Soporte en sitio",
+                    "description": "El soporte en sitio garantiza la resolución rápida de problemas, el mantenimiento de sistemas y la asistencia técnica, mejorando la productividad y minimizando interrupciones."
+                }
+            }
+        },
+        "faqSection": {
+    "titlePrimary": "FAQ",
+    "titleSecondary1": "Obtén",
+    "titleSecondary2": "Respuestas",
+    "titleSecondary3": "a Tus Preguntas.",
+    "description": "¿Necesitas ayuda o tienes preguntas sobre alguna característica específica?",
+    
+    "questions1": {
+        "question1": "¿En qué se especializa su empresa?",
+        "answer1": "Nos especializamos en proporcionar maquinaria y equipos de alta calidad para los sectores de la construcción, agricultura, minería y fabricación industrial, garantizando eficiencia, confiabilidad y productividad para las empresas."
+    },
+    "questions2": {
+        "question2": "¿Qué industrias atiende su empresa?",
+        "answer2": "Nos especializamos en proporcionar maquinaria y equipos de alta calidad para los sectores de la construcción, agricultura, minería y fabricación industrial, garantizando eficiencia, confiabilidad y productividad para las empresas."
+    },
+    "questions3": {
+        "question3": "¿Puedo solicitar una demostración de producto?",
+        "answer3": "Sí, ofrecemos demostraciones completas de todos nuestros equipos. Puede programar una demostración a través de nuestro sitio web o contactando directamente a nuestro equipo de ventas."
+    },
+    "questions4": {
+        "question4": "¿Ofrecen soporte postventa?",
+        "answer4": "Sí, ofrecemos un completo servicio postventa que incluye mantenimiento, reparaciones, asistencia técnica y disponibilidad de repuestos para garantizar que su equipo funcione a un rendimiento óptimo."
+    }
+}
+
+    },
+ "footerSection": {
+    "description": "Puerta de acceso a la excelencia industrial, brindando innovación, eficiencia y confiabilidad con soluciones de vanguardia para un crecimiento sostenible y éxito a largo plazo.",
+    "equipment": "Equipo",
+    "equipmentCategories": {
+        "construction": "Construcción",
+        "utility": "Petróleo, Gas, Energía y Servicios Públicos",
+        "marine": "Marítimo, Aeronáutico, Ferroviario",
+        "handling": "Elevación y Manipulación de Materiales",
+        "aggregate": "Áridos"
+    },
+    "legal": {
+        "title":"legal",
+        "privacy": "Política de Privacidad",
+        "terms": "Términos y Condiciones"
+    },
+    "contact": {
+        "title":"contacto Us",
+        "email": "abc@gmail.com",
+        "phone": "+99-01548975148"
+    }
+}
+
+}

@@ -1,0 +1,247 @@
+{
+    "tabTitle": {
+        "home": "Create Next App"
+    },
+    "header":{
+        "title":{
+            "firstName":"ATLANTIC",
+            "lastName":"MACHINERY & EQUIPMENT"
+        },
+        "nav":{
+            "home":"Home",
+            "about":"About",
+            "category":"Category",
+            "brands":"Brands",
+            "contact":"Contact us"
+        }
+    },
+    "homePage": {
+        "heroSection": {
+            "titlePrimary": "Welcome to Atlantic Machinery & Equipment",
+            "titleSecondary": "Premium Machinery,",
+            "titleThird": " Engineered for Performance.",
+            "description": "Your gateway to industrial excellence, delivering innovation, efficiency, and reliability through cutting-edge solutions for sustainable growth and long-term success."
+        },
+        "brandSection": {
+            "title1": "Our",
+            "title2": "Brand",
+            "title3": "Partners"
+        },
+        "categorySection": {
+            "titlePrimary": "Let's Choose",
+            "titleSecondary1": "Choose Your Desired",
+            "titleSecondary2": "Product",
+            "titleSecondary3": "Category",
+            "categoryDropdownName": "select Category",
+            "categoryDropdownValue": "All",
+            "subcategory": "Select subcategory",
+            "showing":"Showing",
+            "of":"of",
+            "products":"products"
+        },
+        "aboutSection": {
+            "titlePrimary": "About",
+            "titleSecondary1": "Leaders in",
+            "titleSecondary2": "Machinery & Equipment.",
+            "description": "Atlantic Machinery is a global leader in innovative, high-quality equipment solutions, providing reliability, efficiency, and excellence to meet diverse industrial needs across various sectors with advanced technology and superior performance.",
+            "features": {
+                "companyLegality": {
+                    "title": "Company Legality",
+                    "description": "A company's legality refers to its compliance with laws, regulations, and licensing requirements to operate legally within its jurisdiction and industry."
+                },
+                "equipmentLegality": {
+                    "title": "Equipment Legality",
+                    "description": "Equipment legality ensures compliance with regulations, preventing unfair advantages, safety hazards, and rule violations for competitors."
+                },
+                "operatorLegality": {
+                    "title": "Operator Legality",
+                    "description": "Operator legality ensures compliance with laws, regulations, and ethical standards governing operations, safety, and responsibilities."
+                }
+            }
+        },
+        "contactSection": {
+            "titlePrimary": "Contact",
+            "titleSecondary": "Hi there. We're here if you need us.",
+            "titleTertiary": "Ask Us Anything",
+            "location": "No. 57A, Madison Street, Baltimore, MD, USA 4807",
+            "email": "abc@gmail.com",
+            "phone": "+99-01548975148",
+            "from": {
+                "name": {
+                    "lebelName": "Full Name",
+                    "placeName": "Enter Your Full Name"
+                },
+                "email": {
+                    "lebelName": "Email Address",
+                    "placeName": "Enter Your Email address"
+                },
+                "Address": {
+                    "lebelName": "Address",
+                    "placeName": "Enter Your Address"
+                },
+                "Contact_Number": {
+                    "lebelName": "Contact Number",
+                    "placeName": "Enter Your Contact Number"
+                },
+                "Comment": {
+                    "lebelName": "Comments",
+                    "placeName": "Write Here..."
+                },
+                "button": "Send message"
+            }
+        },
+        "offerSection": {
+            "titlePrimary": "What We Offer",
+            "titleSecondary1": "Enjoy",
+            "titleSecondary2": "Dependable and Efficient",
+            "titleSecondary3": " Service with Every Rental.",
+            "description": "Enjoy dependable and efficient service with every rental. We prioritize reliability, customer satisfaction, and seamless experiences, ensuring a hassle-free process tailored to your needs every time.",
+            "features": {
+                "deliveryPickup": {
+                    "title": "Delivery & Pickup",
+                    "description": "Enjoy fast and convenient delivery or pickup options. Order online, choose your preferred method, and receive your items hassle-free—right at your doorstep or in-store."
+                },
+                "maintenanceRepair": {
+                    "title": "Equipment Maintenance & Repair",
+                    "description": "Regular equipment maintenance and timely repairs ensure efficiency, longevity, and safety. Proper inspections, lubrication, and part replacements prevent breakdowns, reducing downtime and operational costs."
+                },
+                "onSiteSupport": {
+                    "title": "On-Site Support",
+                    "description": "On-site support ensures prompt issue resolution, system maintenance, and technical assistance, enhancing productivity, minimizing downtime, and providing hands-on solutions tailored to business needs efficiently."
+                }
+            }
+        },
+
+
+
+        "faqSection": {
+            "titlePrimary": "FAQ",
+            "titleSecondary1": "Get",
+            "titleSecondary2": "Answers",
+            "titleSecondary3": "to Your Questions.",
+            "description": "Do you need help or have questions about any specific features?",
+            
+            "questions1":  {
+                    "question1": "What does your company specialize in?",
+                    "answer1": "We specialize in providing high-quality machinery and equipment for the construction, agriculture, mining, and industrial manufacturing sectors, ensuring efficiency, reliability, and productivity for businesses."
+                },
+               "questions2": {
+                    "question2": "Which industries does your company serve?",
+                    "answer2": "We specialize in providing high-quality machinery and equipment for the construction, agriculture, mining, and industrial manufacturing sectors, ensuring efficiency, reliability, and productivity for businesses."
+                },
+               "questions3": {
+                    "question3": "Can I request a product demonstration?",
+                    "answer3": "Yes, we offer comprehensive product demonstrations for all our equipment. You can schedule a demo through our website or by contacting our sales team directly."
+                },
+                "questions4":{
+                    "question4": "Do you provide after-sales support?",
+                    "answer4": "Yes, we provide extensive after-sales support including maintenance, repairs, technical assistance, and spare parts availability to ensure your equipment operates at optimal performance."
+                }
+            
+        }
+
+
+
+
+       
+    },
+    "aboutPage": {
+        "bannerTitle": "About",
+        "titlePrimary": "About",
+        "titleSecondary": "Powering Industries with Innovation",
+        "description": "Alphron Machinery & Equipment provides all the latest machinery solutions, enhancing today's industries. Constantly at the forefront of technology and serving industries globally, we've built long-lasting relationships with countless partners globally, all while maintaining a commitment to excellence.",
+        "features": [
+            "Worldwide Service",
+            "Reliable Performance",
+            "Dedicated Support",
+            "Machinery Experts",
+            "Engineering Strength",
+            "Precision Engineering"
+        ]
+    },
+    "Policy": {
+        "title": "Return Policy",
+        "one": "All returns must be requested within 10 days of original purchase date.",
+        "two": "You are entitled to a refund or an exchange when item has been returned with contents intact and unused. Return requests will be processed within 7 business days once we receive the item(s) back from the original customer. A return label will sent to you via email to send the product back once it's approved. Refunds will be applied directly to the payment method that was used at the time of purchase. Items returned for a refund are subject to a 10% restocking fee.",
+        "three": "Refunds can take up to 5 business days to completely process after the refund has been initiated. If you have any questions regarding our return/refund process, feel free to contact us.",
+        "four": "All products sold during a Qilo Co. promotion are FINAL, and are not subject to Qilo Co standard refund/return policy. A Special Promotion is defined as any sale/promotion of product, below the currently advertised MSRP.",
+        "five": "We strive to make all customers satisfied in every way. If you feel that your reason for returning the product or requesting a refund is valid, we will listen carefully to your request and respond in a timely and courteous manner. If you purchased our product through a retailer or a distributor, please go to the original purchase location for any returns or exchanges."
+    },
+    "terms": {
+        "title": "Terms of Services",
+        "one": {
+            "title": "Purpose",
+            "des": "The Purpose Of This Privacy Policy Is To Inform You About How We Collect, Use, And Disclose The Kind Of Information From You And Other Users Of The Site."
+        },
+        "two": {
+            "title": "What Information Do We Collect?",
+            "des": "We Collect Information From You When You Place An Order, Subscribe To Our Newsletter, Respond To A Survey Or Fill Out A Form, Register For The Site Or Registrations, Fill Out Any Forms On The Site, Or Enter Promotions. You May Be Asked To Enter Your Name, E-Mail Address, Mailing Address, Phone Number Or Credit Card Information. You May, However, Visit Our Site Anonymously."
+        },
+        "three": {
+            "title": "What Do We Use Your Information For?",
+            "des": "Your Information May Be Used For One Or More Of The Following Ways: To Personalize Your Experience (Your Information Helps Us To Better Respond To Your Individual Needs) To Improve Our Website (We Continually Strive To Improve Our Website Offerings Based On The Information And Feedback We Receive From You) To Improve Customer Service (Your Information Helps Us To More Effectively Respond To Your Customer Service Requests And Support Needs) To Process Transactions To Administer A Contest, Promotion, Survey Or Other Site Feature To Send Periodic Emails To Send Advertising Information For Order Processing, May Be Used To Send You Information And Updates Pertaining To Your Order, In Addition To Receiving Occasional Company News, Updates, Related Product Or Service Information, Etc. Note: If At Any Time You Would Like To Unsubscribe From Receiving Future Emails, We Include Detailed Unsubscribe Instructions At The Bottom Of Each Email. Your Information, Whether Public Or Private, Will Not Be Sold, Exchanged, Transferred, Or Given To Any Other Company For Any Reason Whatsoever, Without Your Consent, Other Than For The Express Purpose Of Delivering The Purchased Product Or Service Requested."
+        },
+        "four": {
+            "title": "Security",
+            "des": "We Take Steps To Safeguard Your Information In Accordance With This Privacy Policy. For Example, When You Enter Sensitive Personal Information Such As Your Credit Card Number Into The Site, We Encrypt That Information Using Secure Socket Layer Technology (SSL). However, Regardless Of Precautions Taken By The Internet, Or Method Of Electronic Storage, Is 100% Secure. As Such, We Cannot Promise, Ensure, Or Warrant The Security Of Any Information That You May Provide To Us. We Do All We Can To Protect Your Information From Unauthorized Access, Disclosure, Alteration, Or Destruction. We Prioritize Key Legally Required Standards Of Key Tenets Of The Security: Confidentiality, Or Integrity Of Your Unencrypted/Plaintext Secret, Transaction Data. As Defined In Applicable State And Law Concerning Security Breaches, We Will Make Reasonable Attempts To Notify You At No Charge If We Discover That A Breach Of Your Personal Or Private Data Has Occurred When We Believe There Is A Significant Risk Of Harm To You Or If Notice Is Otherwise Required By Law. In Addition, We Will Make Reasonable Attempts Within Our Business Control To Determine The Scope Of The Breach And/Or To Restore The Reasonable Integrity Of The Affected Data System."
+        },
+        "five": {
+            "title": "Advertising",
+            "des": "Our Company May Display Online Advertisements. In These Cases We Share Aggregated And Non-identifying Information About Our Visitors And Customers Collected Through The Registration Process As Well As Through Online Surveys And Promotions With Our Advertisers. Additionally, In Some Instances, We Use This Aggregated And Non-identifying Information To Deliver Tailored Advertisements. For Instance, An Advertiser Tells Us The Audience They Want To Reach And Provides Us Advertisement Tailored To The Audience. Based Upon The Aggregated And Non-identifying Information We Have Collected, We May Then Display Or Send The Advertisement To The Appropriate Audience. We Do Not Share Personal Information About Individual Customers With These Advertisers."
+        },
+        "six": {
+            "title": "Email Communication",
+            "des": "When Visitors Or Customers Send Email Inquiries To Our Company, The Return Email Address Is Used To Answer The Email Inquiry We Receive. Our Company Does Not Use The Return Email Address For Any Other Purpose And Does Not Share The Return Email Address With Any Third Party."
+        },
+        "seven": {
+            "title": "Do We Use Cookies?",
+            "des": "Yes, Cookies Are Small Files That A Site Or Its Service Provider Transfers To Your Computer's Hard Drive Through Your Web Browser (If You Allow) That Enables The Site's Or Service Provider's Systems To Recognize Your Browser And Capture And Remember Certain Information. We Use Cookies To Collect, Store, And Sometimes Track Information For Statistical Purposes To Improve The Products And Services We Provide And To Manage Our Telecommunication Networks. We Use Google Analytics, A Web Analysis Service Of Google Inc. (\"Google\") To Provide Contextual And Personalized Services. These Cookies Do Not Enable Third Parties To Access Any Of Your Customer Information. Additionally, Be Aware That If You Visit Other Web Sites Where You Are Prompted To Log In Or That Are Customizable, You May Be Required To Accept Cookies. Third-party Vendors, Including Google, Use Cookies To Serve Ads Based On A User's Prior Visits To Our Website And Other Websites. Google's Use Of Advertising Cookies Enables It And Its Partners To Serve Ads To You Based On Your Visit To Our Site And/Or Other Sites On The Internet."
+        },
+        "eight": {
+            "title": "Children",
+            "des": "We Do Not Sell Or Knowingly Target Children Under The Age Of 18. And Do Do Not Collect Personal Information From Any Child Under The Age Of 18. If We Learn That Any Such Information Has Been Provided To Us Via The Site, We Will Delete Or Destroy It. If You Believe That Personal Information About Your Child Or Another Child Under The Age Of 18 Has Been Transmitted Through This Site, Please Contact Us."
+        },
+        "nine": {
+            "title": "Third Party Links",
+            "des": "We Do Not Sell, Trade, Or Otherwise Transfer To Outside Parties Your Personally Identifiable Information. This Does Not Include Trusted Third Parties Who Assist Us In Operating Our Website, Conducting Our Business, Or Servicing You, So Long As Those Parties Agree To Keep This Information Confidential. We May Also Release Your Information When We Believe Release Is Appropriate To Comply With The Law, Enforce Our Site Policies, Or Protect Ours Or Others' Rights, Property, Or Safety. However, Non-personally Identifiable Visitor Information May Be Provided To Other Parties For Marketing, Advertising, Or Other Uses."
+        },
+        "ten": {
+            "title": "California Privacy Rights",
+            "des": "Because We Value Your Privacy We Have Taken The Necessary Precautions To Be In Compliance With The California Online Privacy Protection Act. We Therefore Will Not Distribute Your Personal Information To Outside Parties Without Your Consent."
+        },
+        "elevent": {
+            "title": "Your Consent",
+            "des": "By Using Our Site, You Consent To Our Privacy Policy."
+        },
+        "twelve": {
+            "title": "Revisions",
+            "des": "Our Company Reserves The Right To Revise, Amend Or Modify This Policy, Our Terms Of Service Agreement And Our Other Policies And Agreements At Any Time And In Any Manner, By Updating This Posting. If We Make Material Changes To This Policy, We Will Notify You Here That It Has Been Updated, So That You Are Aware Of What Information We Collect, How We Use It, And Under What Circumstances, If Any, We Use And/Or Disclose It. If Our Store Is Acquired Or Merged With Another Company, Your Information May Be Transferred To The New Owners So That We May Continue To Sell Products To You."
+        },
+        "Questions": {
+            "title": "Questions",
+            "des": "Our Company Believes If You Have Any Questions About This Privacy Policy, Or If You Have Suggestions On How We Might Improve It, Please Contact Us At Hello@OurBrand.Com Or By Phone, Answer_In_Yearly. This Policy Applies To Information Received By Our Office, Website And Agreements By Any And All Manner, By Updating This Posting."
+        }
+    },
+
+    "footerSection": {
+            "description": "Gateway to industrial excellence, providing innovation, efficiency, and reliability with cutting-edge solutions for sustainable growth and long-term success.",
+            "equipment": "Equipment",
+            "equipmentCategories": {
+                "construction":"Construction",
+                "utility":"Oil, Gas, Power & Utility",
+                "marine":"Marine, Aircraft, Rail",
+                "handling":"Lifting & Material Handling",
+                "aggregate":"Aggregate"
+            },
+            "legal": {
+                "title":"legal",
+                "privacy":"Privacy Policy",
+                "terms":"Terms & Conditions"
+            },
+            "contact": {
+                "title":"contact Us",
+                "email": "abc@gmail.com",
+                "phone": "+99-01548975148"
+            }
+        }
+}

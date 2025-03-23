@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+
+@theme {
+    --font-display: "Satoshi", "sans-serif";
+    --color-primary: #DA9E1F;
+
+  }
