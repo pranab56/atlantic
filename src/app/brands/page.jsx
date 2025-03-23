@@ -8,7 +8,7 @@ import React from 'react';
 const Page = () => {
   const { data, isLoading } = useAllBrandQuery();
 
-  console.log(data)
+  console.log(data?.data)
 
   return (
     <div className="bg-[#292929]">

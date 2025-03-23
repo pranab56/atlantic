@@ -10,17 +10,15 @@ const ProductCard = ({
   productId,
   product
 }) => {
-
-
-
   // Check if product and images exist before accessing
   const imageUrl = product && product.images && product.images.length > 0 
     ? `${BaseURL}${product.images[0]}` 
     : "/placeholder-image.jpg"; // Provide a fallback image
 
   return (
-    <div
+    <div 
       className="w-full bg-gray-800 overflow-hidden rounded-lg shadow-lg relative cursor-pointer"
+      onClick={() => handleProductDetails(productId)}
     >
       {/* Diagonal Yellow Section */}
       <div className="absolute top-0 left-0 w-full h-64 overflow-hidden z-0">
@@ -28,11 +26,13 @@ const ProductCard = ({
       </div>
 
       {/* Product Image */}
-      <div onClick={() => handleProductDetails(productId)} className="relative z-10 h-64 px-4 pt-4 flex items-center justify-center">
+      <div className="relative z-10 h-64 px-4 pt-4 flex items-center justify-center">
         {product ? (
           <Image
-          src={`${product.images.length === 0 ? "https://i.ibb.co.com/gZgXVvtQ/image-82-1-removebg-preview-1.png" : `${BaseURL}${product?.images[0]}`}`}
-
+            src={product.images.length === 0 
+              ? "https://i.ibb.co.com/gZgXVvtQ/image-82-1-removebg-preview-1.png" 
+              : `${BaseURL}${product?.images[0]}`
+            }
             alt={product?.title || "Product image"}
             width={220}
             height={220}
@@ -40,7 +40,7 @@ const ProductCard = ({
             unoptimized={imageUrl.startsWith("http")} // Add this for external images
           />
         ) : (
-          <div className="w-220 h-220  flex items-center justify-center">
+          <div className="w-220 h-220 flex items-center justify-center">
             <span className="text-gray-400">Loading...</span>
           </div>
         )}
@@ -61,7 +61,7 @@ const ProductCard = ({
             >
               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" />
             </svg>
-            <span>{product?.productCode || "N/A"}</span>
+            <span>{product?.model || "N/A"}</span>
           </div>
 
           <div className="flex items-center">
@@ -72,7 +72,7 @@ const ProductCard = ({
             >
               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" />
             </svg>
-            <span>{product?.weight || "N/A"}</span>
+            <span>{product?.capacity || "N/A"}</span>
           </div>
 
           <div className="flex items-center">
@@ -83,13 +83,14 @@ const ProductCard = ({
             >
               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" />
             </svg>
-            <span>{product?.speed || "N/A"}</span>
+            <span>{product?.power || "N/A"}</span>
           </div>
         </div>
 
         {/* Call to Action Button */}
         <button
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent the card click event from firing
             toggleModal();
             handleInquiredProductId(productId);
           }}

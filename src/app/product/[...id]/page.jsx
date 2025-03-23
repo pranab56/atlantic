@@ -12,6 +12,7 @@ import Loading from "../../../components/Loading";
 const ProductDisplay = () => {
   const params = useParams();
   const { data , isLoading:productDetailsLoading } = useProductDetailsQuery(params?.id[0]);
+  console.log(data)
 
   
 
