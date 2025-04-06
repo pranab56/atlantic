@@ -6,7 +6,7 @@ const withNextIntl = createNextIntlPlugin();
 const nextConfig = {
     images: {
       unoptimized: true,
-      domains: ['10.0.60.36:8011'], // Replace with your actual domain (without http/https)
+      domains: ['10.0.60.36:8011'], 
     },
 };
 
