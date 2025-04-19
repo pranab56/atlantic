@@ -13,16 +13,17 @@ const Header = () => {
   const [selectedLang, setSelectedLang] = useState("en");
   const dropdownRef = useRef(null);
   const mobileMenuRef = useRef(null);
+  const menuButtonRef = useRef(null); // Add ref for the menu button
   const router = useRouter();
   const [locale, setLocale] = useState("");
-    const t =  useTranslations("header");
+  const t = useTranslations("header");
 
   const navLinks = [
     { name: t("nav.home"), path: "/" },
-    { name:  t("nav.about"), path: "/about" },
-    { name:  t("nav.category"), path: "/category" },
-    { name:  t("nav.brands"), path: "/brands" },
-    { name:  t("nav.contact"), path: "/contact" },
+    { name: t("nav.about"), path: "/about" },
+    { name: t("nav.category"), path: "/category" },
+    { name: t("nav.brands"), path: "/brands" },
+    { name: t("nav.contact"), path: "/contact" },
   ];
 
   const languages = [
@@ -58,7 +59,6 @@ const Header = () => {
   // Find the selected language object
   const selectedLanguage = languages.find((lang) => lang.value === selectedLang);
 
-
   useEffect(() => {
     const localCookie = document.cookie
       .split("; ")
@@ -75,20 +75,19 @@ const Header = () => {
     }
   }, [router]);
 
-
   useEffect(() => {
     const handleClickOutside = (event) => {
+      // Check if the click is outside both the menu and the menu button
+      const isOutsideMenu = mobileMenuRef.current && !mobileMenuRef.current.contains(event.target);
+      const isOutsideButton = menuButtonRef.current && !menuButtonRef.current.contains(event.target);
+      
       // Close language dropdown when clicking outside
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setLangOpen(false);
       }
 
-      // Close mobile menu when clicking outside
-      if (
-        mobileMenuRef.current &&
-        !mobileMenuRef.current.contains(event.target) &&
-        event.target.id !== "mobile-menu-button"
-      ) {
+      // Close mobile menu when clicking outside both menu and button
+      if (isOutsideMenu && isOutsideButton && mobileMenuOpen) {
         setMobileMenuOpen(false);
       }
     };
@@ -108,7 +107,7 @@ const Header = () => {
       document.removeEventListener("mousedown", handleClickOutside);
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [mobileMenuOpen]);
 
   // Handle body scroll lock when mobile menu is open
   useEffect(() => {
@@ -130,7 +129,7 @@ const Header = () => {
 
   // Handle language change
   const handleLanguageChange = (lang) => {
-    console.log(lang)
+    console.log(lang);
     setSelectedLang(lang);
     setLangOpen(false); // Close dropdown after selection
 
@@ -139,7 +138,10 @@ const Header = () => {
     router.refresh();
   };
 
-
+  // Toggle mobile menu with proper state management
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(prevState => !prevState);
+  };
 
   return (
     <nav className="py-3 text-white bg-[#292929] relative z-50">
@@ -217,11 +219,11 @@ const Header = () => {
             )}
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button - Added ref and simplified toggle logic */}
           <button
-            id="mobile-menu-button"
+            ref={menuButtonRef}
             className="md:hidden text-white focus:outline-none"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            onClick={toggleMobileMenu}
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
           >
             {mobileMenuOpen ? (
@@ -233,13 +235,22 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Improved conditional rendering */}
       {mobileMenuOpen && (
         <div
           ref={mobileMenuRef}
           className="fixed inset-0 z-40 bg-black bg-opacity-90 md:hidden flex flex-col pt-20"
         >
           <div className="container mx-auto px-6">
+            {/* Close button inside mobile menu for better visibility */}
+            <button
+              className="absolute top-4 right-4 text-white p-2"
+              onClick={() => setMobileMenuOpen(false)}
+              aria-label="Close menu"
+            >
+              <FaTimes className="text-2xl" />
+            </button>
+            
             <ul className="flex flex-col space-y-6 text-center">
               {navLinks.map(({ name, path }) => (
                 <li key={name}>

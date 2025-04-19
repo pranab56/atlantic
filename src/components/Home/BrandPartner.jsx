@@ -1,90 +1,108 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { useAllBrandQuery } from "../../features/Products/productsApi";
+import { BaseURL } from "../../utils/BaseURL";
 
 const BrandPartner = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const carouselRef = useRef(null);
+  const animationRef = useRef(null);
   const t = useTranslations("homePage");
 
-  const brandLogos = [
-    { id: 1, name: "Company 1", src: "/icons/machine1.png" },
-    { id: 2, name: "Company 2", src: "/icons/machine2.png" },
-    { id: 3, name: "Hoffman's", src: "/icons/machine1.png" },
-    { id: 4, name: "Company 4", src: "/icons/machine2.png" },
-    { id: 5, name: "Company 5", src: "/icons/machine1.png" },
-    { id: 6, name: "Company 6", src: "/icons/machine2.png" },
-    { id: 7, name: "Company 7", src: "/icons/machine1.png" },
-    { id: 8, name: "Company 8", src: "/icons/machine2.png" },
-    { id: 9, name: "Hoffman's 2", src: "/icons/machine1.png" },
-    { id: 10, name: "Company 10", src: "/icons/machine2.png" },
-  ];
+  const { data, isLoading } = useAllBrandQuery();
+  const brands = data?.data || [];
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % brandLogos.length);
-    }, 3000);
+  // Auto-scroll logic
+  const autoScroll = useCallback(() => {
+    if (!carouselRef.current || isDragging || brands.length === 0) return;
 
-    return () => clearInterval(interval);
-  }, [brandLogos.length]);
-
-  useEffect(() => {
-    if (carouselRef.current) {
-      carouselRef.current.scrollTo({
-        left: currentIndex * 150, // Adjust based on image size
-        behavior: "smooth",
-      });
+    const carousel = carouselRef.current;
+    const maxScroll = carousel.scrollWidth - carousel.clientWidth;
+    
+    if (carousel.scrollLeft >= maxScroll - 1) {
+      carousel.scrollTo({ left: 0, behavior: 'instant' });
+    } else {
+      const scrollAmount = 1;
+      carousel.scrollBy({ left: scrollAmount, behavior: 'auto' });
     }
-  }, [currentIndex]);
 
-  const handleMouseDown = (e) => {
+    animationRef.current = requestAnimationFrame(autoScroll);
+  }, [isDragging, brands.length]);
+
+  // Handle drag events
+  const handleMouseDown = useCallback((e) => {
     setIsDragging(true);
     setStartX(e.clientX);
     setScrollLeft(carouselRef.current.scrollLeft);
-  };
+    cancelAnimationFrame(animationRef.current);
+  }, []);
 
-  const handleMouseLeave = () => {
-    setIsDragging(false);
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-
-  const handleMouseMove = (e) => {
+  const handleMouseMove = useCallback((e) => {
     if (!isDragging) return;
-
+    e.preventDefault();
     const x = e.clientX;
-    const move = (x - startX) * 2; // Adjust the speed here
-
-    // Update the scroll position smoothly without jumping
-    if (carouselRef.current) {
-      carouselRef.current.scrollLeft = scrollLeft - move;
-    }
-  };
-
-  // Bind mouse events directly to the carousel container
-  useEffect(() => {
-    const carouselElement = carouselRef.current;
-
-    if (carouselElement) {
-      carouselElement.addEventListener("mousedown", handleMouseDown);
-      carouselElement.addEventListener("mouseleave", handleMouseLeave);
-      carouselElement.addEventListener("mouseup", handleMouseUp);
-      carouselElement.addEventListener("mousemove", handleMouseMove);
-
-      return () => {
-        carouselElement.removeEventListener("mousedown", handleMouseDown);
-        carouselElement.removeEventListener("mouseleave", handleMouseLeave);
-        carouselElement.removeEventListener("mouseup", handleMouseUp);
-        carouselElement.removeEventListener("mousemove", handleMouseMove);
-      };
-    }
+    const walk = (x - startX) * 2;
+    carouselRef.current.scrollLeft = scrollLeft - walk;
   }, [isDragging, startX, scrollLeft]);
+
+  const handleMouseUp = useCallback(() => {
+    setIsDragging(false);
+    autoScroll();
+  }, [autoScroll]);
+
+  // Initialize and clean up
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (!carousel || brands.length === 0) return;
+
+    // Clone first few items for seamless infinite scroll
+    const items = carousel.querySelectorAll('.brand-item');
+    if (items.length > 0) {
+      const cloneCount = Math.min(5, items.length);
+      for (let i = 0; i < cloneCount; i++) {
+        const clone = items[i].cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        carousel.appendChild(clone);
+      }
+    }
+
+    autoScroll();
+
+    // Add event listeners
+    carousel.addEventListener('mousedown', handleMouseDown);
+    carousel.addEventListener('mousemove', handleMouseMove);
+    carousel.addEventListener('mouseup', handleMouseUp);
+    carousel.addEventListener('mouseleave', handleMouseUp);
+
+    return () => {
+      cancelAnimationFrame(animationRef.current);
+      carousel.removeEventListener('mousedown', handleMouseDown);
+      carousel.removeEventListener('mousemove', handleMouseMove);
+      carousel.removeEventListener('mouseup', handleMouseUp);
+      carousel.removeEventListener('mouseleave', handleMouseUp);
+    };
+  }, [handleMouseDown, handleMouseMove, handleMouseUp, autoScroll, brands]);
+
+  if (isLoading) {
+    return (
+      <div className="w-full pb-8 bg-[#292929]">
+        <div className="container px-2 mx-auto">
+          <h2 className="mb-12 text-4xl flex gap-2 justify-center font-bold text-center">
+            <span className="text-white">{t("brandSection.title1")}</span>
+            <span className="text-amber-500">{t("brandSection.title2")}</span>
+            <span className="text-white">{t("brandSection.title3")}</span>
+          </h2>
+          <div className="flex justify-center">
+            <p className="text-white">Loading brands...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full pb-8 bg-[#292929]">
@@ -97,25 +115,31 @@ const BrandPartner = () => {
 
         <div
           ref={carouselRef}
-          className="relative flex overflow-hidden  select-none"
+          className="relative flex overflow-hidden select-none scroll-smooth"
+          style={{ scrollBehavior: 'smooth' }}
         >
-          <div className="flex w-full">
-            {[...brandLogos, ...brandLogos].map((logo, index) => (
+          <div className="flex">
+            {brands.map((brand) => (
               <div
-                key={`${logo.id}-${index}`}
-                className="min-w-[145px] mx-4 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity duration-300"
+                key={brand._id}
+                className="brand-item min-w-[145px] mx-4 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity duration-300"
               >
-                <div className="relative flex items-center justify-center">
-                  <div className="p-2">
+                <a 
+                  href={brand.brandUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="relative flex items-center justify-center"
+                >
+                  <div className="p-2 rounded-full">
                     <Image
-                      src={logo.src}
-                      alt={logo.name}
-                      width={500}
-                      height={500}
-                      className="object-contain cursor-pointer"
+                      src={`${BaseURL}${brand.image}`}
+                      alt={`${brand._id} logo`}
+                      width={120}
+                      height={80}
+                      className="object-contain cursor-pointer h-20 w-auto"
                     />
                   </div>
-                </div>
+                </a>
               </div>
             ))}
           </div>

@@ -10,7 +10,7 @@
         "nav":{
             "home":"Home",
             "about":"About",
-            "category":"Category",
+            "category":"Buy / Rent",
             "brands":"Brands",
             "contact":"Contact us"
         }
@@ -32,12 +32,12 @@
             "titleSecondary1": "Choose Your Desired",
             "titleSecondary2": "Product",
             "titleSecondary3": "Category",
-            "categoryDropdownName": "select Category",
+            "categoryDropdownName": "Select Category",
             "categoryDropdownValue": "All",
             "subcategory": "Select subcategory",
             "showing":"Showing",
             "of":"of",
-            "products":"products"
+            "products":"Products"
         },
         "aboutSection": {
             "titlePrimary": "About",

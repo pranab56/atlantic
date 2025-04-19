@@ -41,14 +41,15 @@ const Page = () => {
                 </div>
               ) : (
                 data?.data?.map((brand, index) => (
-                  <div key={index} className="w-full h-auto p-2 rounded border border-primary">
-                    <Image
-                      src={`${BaseURL}${brand?.image}`}
-                      alt={`Brand ${index + 1}`}
-                      width={300}
-                      height={100}
-                      className="w-full h-auto rounded"
-                    />
+                  <div key={index} className="w-full p-4 rounded border border-primary flex items-center justify-center aspect-square"> {/* Changed to aspect-square for equal height and width */}
+                    <div className="relative w-full h-40"> {/* Fixed height container */}
+                      <Image
+                        src={`${BaseURL}${brand?.image}`}
+                        alt={`Brand ${index + 1}`}
+                        fill
+                        className="object-contain p-2" /* Changed to object-contain to maintain aspect ratio */
+                      />
+                    </div>
                   </div>
                 ))
               )

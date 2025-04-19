@@ -33,6 +33,11 @@ export const productApi = baseApi.injectEndpoints({
       providesTags: ["product"],
     }),
 
+    faq: builder.query({
+      query: () => "/faq",
+      providesTags: ["product"],
+    }),
+
     Inquiry: builder.mutation({
       query: (inquiryData) => ({
         url: "/inquiry",
@@ -41,9 +46,18 @@ export const productApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["product"],
     }),
+    contact: builder.mutation({
+      query: (inquiryData) => ({
+        url: "/contact",
+        method: "POST",
+        body: inquiryData,
+      }),
+      invalidatesTags: ["product"],
+    }),
 
+    
 
   }),
 });
 
-export const {  useGetAllProductsQuery , useCategoryQuery , useSubCategoryQuery , useProductDetailsQuery , useAllBrandQuery , useInquiryMutation } = productApi;
+export const {  useGetAllProductsQuery , useCategoryQuery , useSubCategoryQuery , useProductDetailsQuery , useAllBrandQuery , useInquiryMutation , useContactMutation , useFaqQuery} = productApi;

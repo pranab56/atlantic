@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FaChevronDown, FaQuestion } from "react-icons/fa";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { useFaqQuery } from "../../features/Products/productsApi";
 
 
 
@@ -51,6 +52,9 @@ const FAQ = () => {
 
 
   const t =  useTranslations("homePage");
+
+  const {data} = useFaqQuery();
+
 
   const faqData = [
     {
@@ -110,11 +114,11 @@ const FAQ = () => {
             />
           </div>
           <div className="w-full md:w-1/2">
-            {faqData.map((faq, index) => (
+            {data?.data?.map((faq, index) => (
               <FAQItem
                 key={index}
-                question={faq.question}
-                answer={faq.answer}
+                question={faq.title}
+                answer={faq.description}
                 isOpen={openIndex === index}
                 toggleOpen={() => toggleFAQ(index)}
               />
