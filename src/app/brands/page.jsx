@@ -8,8 +8,6 @@ import React from 'react';
 const Page = () => {
   const { data, isLoading } = useAllBrandQuery();
 
-  console.log(data?.data)
-
   return (
     <div className="bg-[#292929]">
       {/* Hero Section */}
@@ -34,26 +32,24 @@ const Page = () => {
           <Loading />
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 place-items-center">
-            {
-              data?.data.length === 0 ? (
-                <div className="text-center text-white col-span-4">
-                  No brands available
-                </div>
-              ) : (
-                data?.data?.map((brand, index) => (
-                  <div key={index} className="w-full p-4 rounded border border-primary flex items-center justify-center aspect-square"> {/* Changed to aspect-square for equal height and width */}
-                    <div className="relative w-full h-40"> {/* Fixed height container */}
-                      <Image
-                        src={`${BaseURL}${brand?.image}`}
-                        alt={`Brand ${index + 1}`}
-                        fill
-                        className="object-contain p-2" /* Changed to object-contain to maintain aspect ratio */
-                      />
-                    </div>
+            {data?.data?.length > 0 ? (
+              data.data.map((brand, index) => (
+                <div key={index} className="w-full p-4 rounded border border-primary flex items-center justify-center aspect-square">
+                  <div className="relative w-full h-40">
+                    <Image
+                      src={`${BaseURL}${brand?.image}`}
+                      alt={`Brand ${index + 1}`}
+                      fill
+                      className="object-contain p-2"
+                    />
                   </div>
-                ))
-              )
-            }
+                </div>
+              ))
+            ) : (
+              <div className="col-span-4 py-10 text-center text-white text-xl">
+                No available brands
+              </div>
+            )}
           </div>
         )}
       </div>

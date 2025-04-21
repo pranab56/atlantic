@@ -9,6 +9,7 @@ const BrandPartner = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+  const [isHoveringBrand, setIsHoveringBrand] = useState(false);
   const carouselRef = useRef(null);
   const animationRef = useRef(null);
   const t = useTranslations("homePage");
@@ -18,7 +19,10 @@ const BrandPartner = () => {
 
   // Auto-scroll logic
   const autoScroll = useCallback(() => {
-    if (!carouselRef.current || isDragging || brands.length === 0) return;
+    if (!carouselRef.current || isDragging || isHoveringBrand || brands.length === 0) {
+      cancelAnimationFrame(animationRef.current);
+      return;
+    }
 
     const carousel = carouselRef.current;
     const maxScroll = carousel.scrollWidth - carousel.clientWidth;
@@ -31,7 +35,7 @@ const BrandPartner = () => {
     }
 
     animationRef.current = requestAnimationFrame(autoScroll);
-  }, [isDragging, brands.length]);
+  }, [isDragging, isHoveringBrand, brands.length]);
 
   // Handle drag events
   const handleMouseDown = useCallback((e) => {
@@ -42,16 +46,28 @@ const BrandPartner = () => {
   }, []);
 
   const handleMouseMove = useCallback((e) => {
-    if (!isDragging) return;
-    e.preventDefault();
-    const x = e.clientX;
-    const walk = (x - startX) * 2;
-    carouselRef.current.scrollLeft = scrollLeft - walk;
+    // Only resume auto-scroll when the mouse moves and we're not hovering over a brand
+    // Don't restart auto-scroll if we're still hovering over a brand
+    
+    if (isDragging) {
+      e.preventDefault();
+      const x = e.clientX;
+      const walk = (x - startX) * 2;
+      carouselRef.current.scrollLeft = scrollLeft - walk;
+    }
   }, [isDragging, startX, scrollLeft]);
 
   const handleMouseUp = useCallback(() => {
     setIsDragging(false);
-    autoScroll();
+    if (!isHoveringBrand) {
+      autoScroll();
+    }
+  }, [autoScroll, isHoveringBrand]);
+
+  // Function to handle brand mouse leave
+  const handleBrandMouseLeave = useCallback(() => {
+    setIsHoveringBrand(false);
+    autoScroll(); // Restart auto-scroll when leaving a brand
   }, [autoScroll]);
 
   // Initialize and clean up
@@ -97,7 +113,11 @@ const BrandPartner = () => {
             <span className="text-white">{t("brandSection.title3")}</span>
           </h2>
           <div className="flex justify-center">
-            <p className="text-white">Loading brands...</p>
+            <div className="animate-pulse flex space-x-4">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="h-20 w-32 bg-gray-700 rounded-lg"></div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -105,9 +125,9 @@ const BrandPartner = () => {
   }
 
   return (
-    <div className="w-full pb-8 bg-[#292929]">
+    <div className="w-full pb-12 bg-[#292929]">
       <div className="container px-2 mx-auto">
-        <h2 className="mb-12 text-4xl flex gap-2 justify-center font-bold text-center">
+        <h2 className="mb-12 text-4xl flex flex-wrap gap-2 justify-center font-bold text-center">
           <span className="text-white">{t("brandSection.title1")}</span>
           <span className="text-amber-500">{t("brandSection.title2")}</span>
           <span className="text-white">{t("brandSection.title3")}</span>
@@ -115,14 +135,17 @@ const BrandPartner = () => {
 
         <div
           ref={carouselRef}
-          className="relative flex overflow-hidden select-none scroll-smooth"
+          className="relative flex overflow-hidden select-none scroll-smooth py-4"
           style={{ scrollBehavior: 'smooth' }}
+          onMouseMove={handleMouseMove}
         >
-          <div className="flex">
+          <div className="flex items-center">
             {brands.map((brand) => (
               <div
                 key={brand._id}
-                className="brand-item min-w-[145px] mx-4 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity duration-300"
+                className="brand-item flex-shrink-0 mx-6 flex items-center justify-center opacity-80 hover:opacity-100 transition-all duration-300 transform hover:scale-105"
+                onMouseEnter={() => setIsHoveringBrand(true)}
+                onMouseLeave={handleBrandMouseLeave}
               >
                 <a 
                   href={brand.brandUrl} 
@@ -130,14 +153,17 @@ const BrandPartner = () => {
                   rel="noopener noreferrer"
                   className="relative flex items-center justify-center"
                 >
-                  <div className="p-2 rounded-full">
-                    <Image
-                      src={`${BaseURL}${brand.image}`}
-                      alt={`${brand._id} logo`}
-                      width={120}
-                      height={80}
-                      className="object-contain cursor-pointer h-20 w-auto"
-                    />
+                  <div className="p-4 bg-gray-800 rounded-xl shadow-lg hover:shadow-amber-500/20 transition-shadow duration-300">
+                    <div className="relative w-32 h-16">
+                      <Image
+                        src={`${BaseURL}${brand.image}`}
+                        alt={`${brand.name || brand._id} logo`}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="object-contain cursor-pointer"
+                        style={{ filter: "grayscale(30%)" }}
+                      />
+                    </div>
                   </div>
                 </a>
               </div>
