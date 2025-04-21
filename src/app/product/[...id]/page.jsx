@@ -61,7 +61,7 @@ const ProductDisplay = () => {
   return (
     <div className="bg-[#292929] py-10">
       {isOpenModal && (
-        <InquiryModal isOpenModal={isOpenModal} toggleModal={toggleModal} />
+        <InquiryModal productId={params?.id[0]} isOpenModal={isOpenModal} toggleModal={toggleModal} />
       )}
       <div className="container mx-auto">
         {
@@ -73,11 +73,10 @@ const ProductDisplay = () => {
                   {productImages.map((image, index) => (
                     <motion.div
                       key={index}
-                      className={`rounded-md overflow-hidden cursor-pointer border-2 ${
-                        selectedImageIndex === index
+                      className={`rounded-md overflow-hidden cursor-pointer border-2 ${selectedImageIndex === index
                           ? "border-yellow-500"
                           : "border-gray-700"
-                      }`}
+                        }`}
                       style={{
                         width: `${THUMBNAIL_SIZE}px`,
                         height: `${THUMBNAIL_SIZE}px`
@@ -141,6 +140,22 @@ const ProductDisplay = () => {
                         transition={{ delay: 0.3 }}
                       >
                         ${productPrice}
+                      </motion.p>
+                      <motion.p
+                        className=""
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3 }}
+                      >
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation(); // Prevent the card click event from firing
+                            toggleModal();
+                          }}
+                          className="w-full cursor-pointer border border-yellow-400 text-yellow-400 font-bold py-3 mt-4 rounded-md hover:bg-[#292930] transition duration-200"
+                        >
+                          Inquire Now
+                        </button>
                       </motion.p>
                     </div>
                   </div>
