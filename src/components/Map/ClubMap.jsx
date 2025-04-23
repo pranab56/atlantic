@@ -27,11 +27,57 @@ const ClubMap = ({ selectedClub, setSelectedClub }) => {
   const { data, isLoading, isError } = useGetAllProductsQuery();
   const [products, setProducts] = useState([]);
   const [defaultCenter, setDefaultCenter] = useState([23.7558, 90.4125]); // Default to Dhaka
+  const [locationLoading, setLocationLoading] = useState(true);
 
   const customIcon = new Icon({
     iconUrl: "/icons/markar2.svg",
     iconSize: [50, 50],
   });
+
+  useEffect(() => {
+    const detectUserLocation = async () => {
+      try {
+        // Try browser geolocation first (more accurate)
+        if ("geolocation" in navigator) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              const { latitude, longitude } = position.coords;
+              setDefaultCenter([latitude, longitude]);
+              setLocationLoading(false);
+            },
+            async (error) => {
+              console.log("Geolocation permission denied, falling back to IP detection");
+              await fetchLocationByIP();
+            },
+            { timeout: 5000 } // 5 seconds timeout
+          );
+        } else {
+          // Browser doesn't support geolocation
+          await fetchLocationByIP();
+        }
+      } catch (error) {
+        console.error("Location detection failed:", error);
+        setLocationLoading(false);
+      }
+    };
+
+    const fetchLocationByIP = async () => {
+      try {
+        const response = await fetch('https://ipapi.co/json/');
+        const data = await response.json();
+        if (data.latitude && data.longitude) {
+          setDefaultCenter([data.latitude, data.longitude]);
+        }
+      } catch (ipError) {
+        console.error("IP-based location failed:", ipError);
+        // Keep default Dhaka coordinates
+      } finally {
+        setLocationLoading(false);
+      }
+    };
+
+    detectUserLocation();
+  }, []);
 
   useEffect(() => {
     if (data?.data?.result) {
@@ -40,15 +86,17 @@ const ClubMap = ({ selectedClub, setSelectedClub }) => {
       );
       setProducts(validProducts);
 
-      if (validProducts.length > 0) {
+      // Only update center if we haven't detected user location yet
+      if (validProducts.length > 0 && locationLoading) {
         const firstProduct = validProducts[0];
         setDefaultCenter([
           firstProduct.location.coordinates[1],
           firstProduct.location.coordinates[0]
         ]);
+        setLocationLoading(false);
       }
     }
-  }, [data]);
+  }, [data, locationLoading]);
 
   // Transform API data to match expected format
   const filteredClubs = products.map(product => ({
@@ -105,10 +153,10 @@ const ClubMap = ({ selectedClub, setSelectedClub }) => {
     ),
   }));
 
-  if (isLoading) {
+  if (isLoading || locationLoading) {
     return (
       <div className="h-[800px] w-full flex items-center justify-center">
-        <Spin size="large" tip="Loading map data..." />
+        <Spin size="large" tip="Detecting your location..." />
       </div>
     );
   }

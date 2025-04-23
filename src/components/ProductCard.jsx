@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { BaseURL } from "../utils/BaseURL";
+import { useRouter } from "next/navigation";
 
 const ProductCard = ({
   toggleModal,
@@ -15,10 +16,16 @@ const ProductCard = ({
     ? `${BaseURL}${product.images[0]}` 
     : "/placeholder-image.jpg"; // Provide a fallback image
 
+
+    const router = useRouter();
+
+
+    console.log(product)
   return (
     <div 
-      className="w-full bg-gray-800 overflow-hidden rounded-lg shadow-lg relative cursor-pointer"
-      onClick={() => handleProductDetails(productId)}
+      className="w-full bg-gray-800 overflow-hidden rounded-lg shadow-lg relative  flex flex-col"
+      style={{ minHeight: "550px" }} // Set a fixed minimum height
+      // onClick={() => handleProductDetails(productId)}
     >
       {/* Diagonal Yellow Section */}
       <div className="absolute top-0 left-0 w-full h-64 overflow-hidden z-0">
@@ -26,7 +33,7 @@ const ProductCard = ({
       </div>
 
       {/* Product Image */}
-      <div className="relative z-10 h-64 px-4 pt-4 flex items-center justify-center">
+      <div className="relative z-10 h-64 px-4 pt-4 flex items-center justify-center flex-shrink-0">
         {product ? (
           <Image
             src={product.images.length === 0 
@@ -47,12 +54,14 @@ const ProductCard = ({
       </div>
 
       {/* Product Info */}
-      <div className="relative z-10 p-4 text-white">
-        <h2 className="text-3xl font-medium">{product?.name || "Product Title"}</h2>
-        <p className="text-3xl font-bold mt-1">${product?.price || "0.00"}</p>
-
+      <div className="relative z-10 p-4 text-white flex flex-col flex-grow">
+        <h2 onClick={()=>router.push(`/product/${productId}`)} className="text-3xl font-medium mb-1 truncate cursor-pointer" title={product?.name || "Product Title"}>
+          {product?.name || "Product Title"}
+        </h2>
+        <p className="text-3xl font-bold mb-4">${product?.price || "0.00"}</p>
+        <p onClick={()=>router.push(product?.brand?.brandUrl)} className="text-xl font-bold mb-4 cursor-pointer">Brand Name : {`${product?.brand ? product?.brand?.name :"Demo"}`}</p>
         {/* Product Specs */}
-        <div className="flex items-center justify-between mt-4 text-sm">
+        <div className="flex items-center justify-between mt-auto text-sm">
           <div className="flex items-center">
             <svg
               className="w-5 h-5 text-yellow-400 mr-1"

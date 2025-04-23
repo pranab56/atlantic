@@ -16,23 +16,17 @@ const Category = () => {
   const router = useRouter();
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
-  const t =  useTranslations("homePage");
+  const t = useTranslations("homePage");
   
   // Pagination states
-
- 
-
-
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
   const [totalItems, setTotalItems] = useState(0);
   const [productId, setProductId] = useState("");
   
-  const { data: category, isLoading: categoryLoading } = useCategoryQuery();
-
+  const { data: category, isLoading: categoryLoading, error: categoryError } = useCategoryQuery();
   const [selectedSubCategoryId, setSelectedSubCategoryId] = useState(null);
   const { data: subCategory, isLoading: subCategoryLoading } = useSubCategoryQuery(selectedCategoryId);
-
 
   const { 
     data: products, 
@@ -45,15 +39,9 @@ const Category = () => {
     subCategoryId: selectedSubCategoryId || undefined
   });
 
-
-
-
-
-
   // Category dropdown states
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(t("categorySection.categoryDropdownName"));
-
   const categoryDropdownRef = useRef(null);
 
   // Subcategory dropdown states
@@ -67,10 +55,9 @@ const Category = () => {
   // Update total items when products data changes
   useEffect(() => {
     if (products?.data) {
-      // Fix: Properly extract the total count from the API response
       if (typeof products.data.total === 'number') {
         setTotalItems(products.data.total);
-      } else if (products.data.result?.length) {
+      } else if (Array.isArray(products.data.result)) {
         setTotalItems(products.data.result.length);
       } else {
         setTotalItems(0);
@@ -78,13 +65,10 @@ const Category = () => {
     }
   }, [products]);
 
-  // Calculate total pages
-  
-
   // Toggle functions
   const toggleCategoryDropdown = () => setIsCategoryOpen((prev) => !prev);
   const toggleSubcategoryDropdown = () => {
-    if (selectedCategory !== "Select Category") {
+    if (selectedCategory !== t("categorySection.categoryDropdownName")) {
       setIsSubcategoryOpen((prev) => !prev);
     }
   };
@@ -93,22 +77,18 @@ const Category = () => {
     router.push(`/product/${id}`);
   };
 
-
   const handleCategorySelect = (category) => {
     if (category === "All") {
-      // Reset filters when "All" is selected
-      setSelectedCategory("Select Category");
+      setSelectedCategory(t("categorySection.categoryDropdownName"));
       setSelectedCategoryId(null);
-      setSelectedSubcategory("Select Subcategory");
+      setSelectedSubcategory(t("categorySection.subcategory"));
       setSelectedSubCategoryId(null);
     } else {
       setSelectedCategory(category.name);
       setSelectedCategoryId(category._id);
-      // Reset subcategory when category changes
-      setSelectedSubcategory("Select Subcategory");
+      setSelectedSubcategory(t("categorySection.subcategory"));
       setSelectedSubCategoryId(null);
     }
-    // Reset to first page when category changes
     setCurrentPage(1);
     setIsCategoryOpen(false);
   };
@@ -116,7 +96,6 @@ const Category = () => {
   const handleSubcategorySelect = (subcategory) => {
     setSelectedSubcategory(subcategory.name);
     setSelectedSubCategoryId(subcategory._id);
-    // Reset to first page when subcategory changes
     setCurrentPage(1);
     setIsSubcategoryOpen(false);
   };
@@ -124,16 +103,10 @@ const Category = () => {
   // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (
-        categoryDropdownRef.current &&
-        !categoryDropdownRef.current.contains(event.target)
-      ) {
+      if (categoryDropdownRef.current && !categoryDropdownRef.current.contains(event.target)) {
         setIsCategoryOpen(false);
       }
-      if (
-        subcategoryDropdownRef.current &&
-        !subcategoryDropdownRef.current.contains(event.target)
-      ) {
+      if (subcategoryDropdownRef.current && !subcategoryDropdownRef.current.contains(event.target)) {
         setIsSubcategoryOpen(false);
       }
     };
@@ -144,7 +117,6 @@ const Category = () => {
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    // Scroll to top of product list
     const productsGrid = document.getElementById("products-grid");
     if (productsGrid) {
       window.scrollTo({
@@ -174,17 +146,14 @@ const Category = () => {
   };
 
   const toggleModal = () => setIsOpenModal(!isOpenModal);
-
-  const isSubcategoryDisabled = selectedCategory === "";
-  
-  // Get current products from API response
-  const currentProducts = products?.data?.result || [];
-
+  const isSubcategoryDisabled = !selectedCategoryId;
+  const currentProducts = Array.isArray(products?.data?.result) ? products.data.result : [];
+  const categories = Array.isArray(category?.data?.result) ? category.data.result : [];
+  const subCategories = Array.isArray(subCategory?.data?.result) ? subCategory.data.result : [];
 
   const handleInquiredProductId = (id) => {
-        setProductId(id)
-  }
-
+    setProductId(id);
+  };
 
   return (
     <div className="w-full py-12 bg-[#292929]">
@@ -215,7 +184,7 @@ const Category = () => {
               <span>{t("categorySection.titlePrimary")}</span>
             </div>
             <h1 className="text-white text-2xl font-bold">
-            {t("categorySection.titleSecondary1")}{" "}
+              {t("categorySection.titleSecondary1")}{" "}
               <span className="text-amber-500">{t("categorySection.titleSecondary2")}</span> {t("categorySection.titleSecondary3")}
             </h1>
           </div>
@@ -264,7 +233,6 @@ const Category = () => {
                     className="absolute z-50 w-full mt-1 bg-[#393939] border border-gray-800 rounded shadow-lg max-h-60 overflow-y-auto"
                   >
                     <div className="py-1">
-                      {/* Add "All" option */}
                       <motion.button
                         onClick={() => handleCategorySelect("All")}
                         className="block w-full px-4 py-3 text-left text-sm text-white focus:outline-none"
@@ -275,7 +243,7 @@ const Category = () => {
                       >
                         {t("categorySection.categoryDropdownValue")}
                       </motion.button>
-                      {category?.data?.map((cat) => (
+                      {categories.map((cat) => (
                         <motion.button
                           key={cat._id}
                           onClick={() => handleCategorySelect(cat)}
@@ -342,8 +310,8 @@ const Category = () => {
                     className="absolute z-50 w-full mt-1 bg-[#393939] border border-gray-800 rounded shadow-lg max-h-60 overflow-y-auto"
                   >
                     <div className="py-1">
-                      {subCategory?.data?.length > 0 ? (
-                        subCategory.data.map((subcategory) => (
+                      {subCategories.length > 0 ? (
+                        subCategories.map((subcategory) => (
                           <motion.button
                             key={subcategory._id}
                             onClick={() => handleSubcategorySelect(subcategory)}
@@ -378,15 +346,15 @@ const Category = () => {
             </div>
           ) : (
             <>
-              {t("categorySection.showing")} {currentProducts.length}  {t("categorySection.of")} {totalItems}{" "}
+              {t("categorySection.showing")} {currentProducts.length} {t("categorySection.of")} {totalItems}{" "}
               {t("categorySection.products")}
-              {selectedCategory !== "Select Category" && (
+              {selectedCategory !== t("categorySection.categoryDropdownName") && (
                 <span>
                   {" "}
                   in <span className="text-amber-500">{selectedCategory}</span>
                 </span>
               )}
-              {selectedSubcategory !== "Select Subcategory" && (
+              {selectedSubcategory !== t("categorySection.subcategory") && (
                 <span>
                   {" "}
                   / <span className="text-amber-500">{selectedSubcategory}</span>
@@ -402,17 +370,16 @@ const Category = () => {
           className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
         >
           {isLoading ? (
-            // Show loading spinner when data is being fetched
             <div className="col-span-full">
               <Loading />
             </div>
           ) : currentProducts.length > 0 ? (
             currentProducts.map((product) => (
               <ProductCard
-              handleInquiredProductId={handleInquiredProductId}
+                handleInquiredProductId={handleInquiredProductId}
                 productId={product._id}
                 key={product._id}
-                  product={product}
+                product={product}
                 toggleModal={toggleModal}
                 handleProductDetails={handleProductDetails}
               />
@@ -442,7 +409,6 @@ const Category = () => {
             </div>
           )}
         </div>
-
 
         {!isLoading && products?.data?.meta?.totalPage && (
           <div className="flex justify-end items-center mt-8">
