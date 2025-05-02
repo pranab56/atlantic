@@ -1,8 +1,6 @@
-import React from "react";
-import Link from "next/link";
 import Image from "next/image";
-import { BaseURL } from "../utils/BaseURL";
 import { useRouter } from "next/navigation";
+import { BaseURL } from "../utils/BaseURL";
 
 const ProductCard = ({
   toggleModal,
@@ -12,20 +10,18 @@ const ProductCard = ({
   product
 }) => {
   // Check if product and images exist before accessing
-  const imageUrl = product && product.images && product.images.length > 0 
-    ? `${BaseURL}${product.images[0]}` 
+  const imageUrl = product && product.images && product.images.length > 0
+    ? `${BaseURL}${product.images[0]}`
     : "/placeholder-image.jpg"; // Provide a fallback image
 
 
-    const router = useRouter();
+  const router = useRouter();
 
-
-    console.log(product)
   return (
-    <div 
+    <div
       className="w-full bg-gray-800 overflow-hidden rounded-lg shadow-lg relative  flex flex-col"
       style={{ minHeight: "550px" }} // Set a fixed minimum height
-      // onClick={() => handleProductDetails(productId)}
+    // onClick={() => handleProductDetails(productId)}
     >
       {/* Diagonal Yellow Section */}
       <div className="absolute top-0 left-0 w-full h-64 overflow-hidden z-0">
@@ -36,8 +32,8 @@ const ProductCard = ({
       <div className="relative z-10 h-64 px-4 pt-4 flex items-center justify-center flex-shrink-0">
         {product ? (
           <Image
-            src={product.images.length === 0 
-              ? "https://i.ibb.co.com/gZgXVvtQ/image-82-1-removebg-preview-1.png" 
+            src={product.images.length === 0
+              ? "https://i.ibb.co.com/gZgXVvtQ/image-82-1-removebg-preview-1.png"
               : `${BaseURL}${product?.images[0]}`
             }
             alt={product?.title || "Product image"}
@@ -55,11 +51,11 @@ const ProductCard = ({
 
       {/* Product Info */}
       <div className="relative z-10 p-4 text-white flex flex-col flex-grow">
-        <h2 onClick={()=>router.push(`/product/${productId}`)} className="text-3xl font-medium mb-1 truncate cursor-pointer" title={product?.name || "Product Title"}>
+        <h2 onClick={() => router.push(`/product/${productId}`)} className="text-3xl font-medium mb-1 truncate cursor-pointer" title={product?.name || "Product Title"}>
           {product?.name || "Product Title"}
         </h2>
         <p className="text-3xl font-bold mb-4">${product?.price || "0.00"}</p>
-        <p onClick={()=>router.push(product?.brand?.brandUrl)} className="text-xl font-bold mb-4 cursor-pointer">Brand Name : {`${product?.brand ? product?.brand?.name :"Demo"}`}</p>
+        <p onClick={() => router.push(product?.brand?.brandUrl)} className="text-xl font-bold mb-4 cursor-pointer">Brand Name : {`${product?.brand ? product?.brand?.name : "Demo"}`}</p>
         {/* Product Specs */}
         <div className="flex items-center justify-between mt-auto text-sm">
           <div className="flex items-center">

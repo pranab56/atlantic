@@ -1,18 +1,28 @@
 "use client";
-import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import ProductCard from "../../../components/ProductCard";
-import InquiryModal from "../../../components/InquiryModal";
-import { useGetAllProductsQuery, useProductDetailsQuery } from "../../../features/Products/productsApi";
 import { useParams } from "next/navigation";
-import { BaseURL } from "../../../utils/BaseURL";
+import { useEffect, useRef, useState } from "react";
+import InquiryModal from "../../../components/InquiryModal";
 import Loading from "../../../components/Loading";
+import ProductCard from "../../../components/ProductCard";
+import { useAllBrandQuery, useGetAllProductsQuery, useProductDetailsQuery } from "../../../features/Products/productsApi";
+import { BaseURL } from "../../../utils/BaseURL";
+
+
 
 const ProductDisplay = () => {
   const params = useParams();
   const { data, isLoading: productDetailsLoading } = useProductDetailsQuery(params?.id[0]);
-  console.log(data)
+  // console.log(data?.data?.brand)
+
+  const { data: brand } = useAllBrandQuery();
+  // console.log(brand?.data) // _id
+
+  const brandName = brand?.data?.find((brand) => brand._id === data?.data?.brand);
+
+
+
 
   const { data: reletedProduct, error, isLoading: reletedProductLoading } = useGetAllProductsQuery({ categoryId: data?.data?.categoryId?._id, subCategoryId: data?.data?.subCategoryId?._id });
 
@@ -74,8 +84,8 @@ const ProductDisplay = () => {
                     <motion.div
                       key={index}
                       className={`rounded-md overflow-hidden cursor-pointer border-2 ${selectedImageIndex === index
-                          ? "border-yellow-500"
-                          : "border-gray-700"
+                        ? "border-yellow-500"
+                        : "border-gray-700"
                         }`}
                       style={{
                         width: `${THUMBNAIL_SIZE}px`,
@@ -139,8 +149,17 @@ const ProductDisplay = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3 }}
                       >
+                        {brandName?.name ? `Brand Name: ${brandName?.name}` : ""}
+                      </motion.p>
+                      <motion.p
+                        className="text-green-400 text-2xl md:text-3xl font-semibold mt-2"
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3 }}
+                      >
                         ${productPrice}
                       </motion.p>
+
                       <motion.p
                         className=""
                         initial={{ opacity: 0, y: -20 }}

@@ -1,42 +1,61 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import ProductCard from "../ProductCard";
-import InquiryModal from "../InquiryModal";
+import { AnimatePresence, motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import {
-  useGetAllProductsQuery,
+  useAllBrandQuery,
   useCategoryQuery,
+  useGetAllProductsQuery,
+  useGetCategoryByBrandIdQuery,
   useSubCategoryQuery,
 } from "../../features/Products/productsApi";
+import InquiryModal from "../InquiryModal";
 import Loading from "../Loading";
-import { useTranslations } from "next-intl";
+import ProductCard from "../ProductCard";
 
 const Category = () => {
   const router = useRouter();
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const t = useTranslations("homePage");
-  
+
   // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
   const [totalItems, setTotalItems] = useState(0);
   const [productId, setProductId] = useState("");
-  
+
+  // Brand state
+  const [selectedBrandId, setSelectedBrandId] = useState(null);
+  const [isBrandOpen, setIsBrandOpen] = useState(false);
+  const [selectedBrand, setSelectedBrand] = useState("All Brands");
+  const brandDropdownRef = useRef(null);
+
   const { data: category, isLoading: categoryLoading, error: categoryError } = useCategoryQuery();
+  const { data: brand, isLoading: brandLoading } = useAllBrandQuery();
+
+  // Only fetch categories by brand ID when a brand is selected
+  const {
+    data: brandCategories,
+    isLoading: brandCategoriesLoading
+  } = useGetCategoryByBrandIdQuery(selectedBrandId, {
+    skip: !selectedBrandId
+  });
+
   const [selectedSubCategoryId, setSelectedSubCategoryId] = useState(null);
   const { data: subCategory, isLoading: subCategoryLoading } = useSubCategoryQuery(selectedCategoryId);
 
-  const { 
-    data: products, 
+  const {
+    data: products,
     isLoading: productsLoading,
     isFetching: productsFetching
   } = useGetAllProductsQuery({
     page: currentPage,
     limit: itemsPerPage,
     categoryId: selectedCategoryId || undefined,
-    subCategoryId: selectedSubCategoryId || undefined
+    subCategoryId: selectedSubCategoryId || undefined,
+    brandId: selectedBrandId || undefined
   });
 
   // Category dropdown states
@@ -50,7 +69,9 @@ const Category = () => {
   const subcategoryDropdownRef = useRef(null);
 
   // Loading state
-  const isLoading = productsLoading || productsFetching || categoryLoading || (selectedCategoryId && subCategoryLoading);
+  const isLoading = productsLoading || productsFetching || categoryLoading || brandLoading ||
+    (selectedBrandId && brandCategoriesLoading) ||
+    (selectedCategoryId && subCategoryLoading);
 
   // Update total items when products data changes
   useEffect(() => {
@@ -66,6 +87,7 @@ const Category = () => {
   }, [products]);
 
   // Toggle functions
+  const toggleBrandDropdown = () => setIsBrandOpen((prev) => !prev);
   const toggleCategoryDropdown = () => setIsCategoryOpen((prev) => !prev);
   const toggleSubcategoryDropdown = () => {
     if (selectedCategory !== t("categorySection.categoryDropdownName")) {
@@ -75,6 +97,23 @@ const Category = () => {
 
   const handleProductDetails = (id) => {
     router.push(`/product/${id}`);
+  };
+
+  const handleBrandSelect = (brandOption) => {
+    if (brandOption === "All") {
+      setSelectedBrand("All Brands");
+      setSelectedBrandId(null);
+    } else {
+      setSelectedBrand(brandOption.name);
+      setSelectedBrandId(brandOption._id);
+    }
+    // Reset category and subcategory when brand changes
+    setSelectedCategory(t("categorySection.categoryDropdownName"));
+    setSelectedCategoryId(null);
+    setSelectedSubcategory(t("categorySection.subcategory"));
+    setSelectedSubCategoryId(null);
+    setCurrentPage(1);
+    setIsBrandOpen(false);
   };
 
   const handleCategorySelect = (category) => {
@@ -103,6 +142,9 @@ const Category = () => {
   // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
+      if (brandDropdownRef.current && !brandDropdownRef.current.contains(event.target)) {
+        setIsBrandOpen(false);
+      }
       if (categoryDropdownRef.current && !categoryDropdownRef.current.contains(event.target)) {
         setIsCategoryOpen(false);
       }
@@ -148,8 +190,14 @@ const Category = () => {
   const toggleModal = () => setIsOpenModal(!isOpenModal);
   const isSubcategoryDisabled = !selectedCategoryId;
   const currentProducts = Array.isArray(products?.data?.result) ? products.data.result : [];
-  const categories = Array.isArray(category?.data?.result) ? category.data.result : [];
+
+  // Determine which categories to show based on brand selection
+  const categories = selectedBrandId && brandCategories?.data ?
+    brandCategories.data :
+    (Array.isArray(category?.data?.result) ? category.data.result : []);
+
   const subCategories = Array.isArray(subCategory?.data?.result) ? subCategory.data.result : [];
+  const brands = Array.isArray(brand?.data) ? brand.data : [];
 
   const handleInquiredProductId = (id) => {
     setProductId(id);
@@ -190,15 +238,86 @@ const Category = () => {
           </div>
 
           {/* Dropdowns Container */}
-          <div className="w-full md:w-[500px] flex flex-col sm:flex-row gap-3">
+          <div className="w-full md:w-[800px] flex flex-col sm:flex-row gap-3">
+            {/* Brand Dropdown */}
+            <div className="relative w-full" ref={brandDropdownRef}>
+              <button
+                onClick={toggleBrandDropdown}
+                disabled={brandLoading}
+                className={`flex items-center justify-between w-full px-4 py-3 cursor-pointer text-sm text-white bg-[#181818] rounded focus:outline-none ${brandLoading ? 'opacity-70' : ''}`}
+              >
+                {brandLoading ? (
+                  <span className="flex items-center">
+                    <span className="animate-spin inline-block h-4 w-4 border-t-2 border-white rounded-full mr-2"></span>
+                    Loading...
+                  </span>
+                ) : (
+                  <span>{selectedBrand}</span>
+                )}
+                <svg
+                  className={`w-4 h-4 transition-transform duration-200 ${isBrandOpen ? "rotate-180" : ""
+                    }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </button>
+
+              <AnimatePresence>
+                {isBrandOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute z-50 w-full mt-1 bg-[#393939] border border-gray-800 rounded shadow-lg max-h-60 overflow-y-scroll overflow-x-hidden"
+                  >
+                    <div className="py-1">
+                      <motion.button
+                        onClick={() => handleBrandSelect("All")}
+                        className="block w-full px-4 py-3 text-left text-sm text-white focus:outline-none"
+                        whileHover={{
+                          backgroundColor: "rgba(75, 85, 99, 0.5)",
+                        }}
+                        transition={{ duration: 0.1 }}
+                      >
+                        {"All"}
+                      </motion.button>
+                      {brands.map((brandItem) => (
+                        <motion.button
+                          key={brandItem._id}
+                          onClick={() => handleBrandSelect(brandItem)}
+                          className="block w-full px-4 py-3 text-left text-sm text-white focus:outline-none"
+                          whileHover={{
+                            backgroundColor: "rgba(75, 85, 99, 0.5)",
+                          }}
+                          transition={{ duration: 0.1 }}
+                        >
+                          {brandItem.name}
+                        </motion.button>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
             {/* Category Dropdown */}
             <div className="relative w-full" ref={categoryDropdownRef}>
               <button
                 onClick={toggleCategoryDropdown}
-                disabled={categoryLoading}
-                className={`flex items-center justify-between w-full px-4 py-3 cursor-pointer text-sm text-white bg-[#181818] rounded focus:outline-none ${categoryLoading ? 'opacity-70' : ''}`}
+                disabled={categoryLoading || (selectedBrandId && brandCategoriesLoading)}
+                className={`flex items-center justify-between w-full px-4 py-3 cursor-pointer text-sm text-white bg-[#181818] rounded focus:outline-none ${categoryLoading || (selectedBrandId && brandCategoriesLoading) ? 'opacity-70' : ''
+                  }`}
               >
-                {categoryLoading ? (
+                {categoryLoading || (selectedBrandId && brandCategoriesLoading) ? (
                   <span className="flex items-center">
                     <span className="animate-spin inline-block h-4 w-4 border-t-2 border-white rounded-full mr-2"></span>
                     Loading...
@@ -207,9 +326,8 @@ const Category = () => {
                   <span>{selectedCategory}</span>
                 )}
                 <svg
-                  className={`w-4 h-4 transition-transform duration-200 ${
-                    isCategoryOpen ? "rotate-180" : ""
-                  }`}
+                  className={`w-4 h-4 transition-transform duration-200 ${isCategoryOpen ? "rotate-180" : ""
+                    }`}
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -243,19 +361,25 @@ const Category = () => {
                       >
                         {t("categorySection.categoryDropdownValue")}
                       </motion.button>
-                      {categories.map((cat) => (
-                        <motion.button
-                          key={cat._id}
-                          onClick={() => handleCategorySelect(cat)}
-                          className="block w-full px-4 py-3 text-left text-sm text-white focus:outline-none"
-                          whileHover={{
-                            backgroundColor: "rgba(75, 85, 99, 0.5)",
-                          }}
-                          transition={{ duration: 0.1 }}
-                        >
-                          {cat.name}
-                        </motion.button>
-                      ))}
+                      {categories.length > 0 ? (
+                        categories.map((cat) => (
+                          <motion.button
+                            key={cat._id}
+                            onClick={() => handleCategorySelect(cat)}
+                            className="block w-full px-4 py-3 text-left text-sm text-white focus:outline-none"
+                            whileHover={{
+                              backgroundColor: "rgba(75, 85, 99, 0.5)",
+                            }}
+                            transition={{ duration: 0.1 }}
+                          >
+                            {cat.name}
+                          </motion.button>
+                        ))
+                      ) : (
+                        <div className="px-4 py-3 text-sm text-gray-400">
+                          No categories available for this brand
+                        </div>
+                      )}
                     </div>
                   </motion.div>
                 )}
@@ -267,13 +391,12 @@ const Category = () => {
               <button
                 onClick={toggleSubcategoryDropdown}
                 disabled={isSubcategoryDisabled || subCategoryLoading}
-                className={`flex items-center justify-between w-full px-4 py-3 text-sm text-white rounded focus:outline-none ${
-                  isSubcategoryDisabled
-                    ? "bg-gray-700 cursor-not-allowed opacity-60"
-                    : subCategoryLoading
+                className={`flex items-center justify-between w-full px-4 py-3 text-sm text-white rounded focus:outline-none ${isSubcategoryDisabled
+                  ? "bg-gray-700 cursor-not-allowed opacity-60"
+                  : subCategoryLoading
                     ? "bg-[#181818] cursor-wait opacity-70"
                     : "bg-[#181818] cursor-pointer"
-                }`}
+                  }`}
               >
                 {selectedCategoryId && subCategoryLoading ? (
                   <span className="flex items-center">
@@ -284,9 +407,8 @@ const Category = () => {
                   <span>{selectedSubcategory}</span>
                 )}
                 <svg
-                  className={`w-4 h-4 transition-transform duration-200 ${
-                    isSubcategoryOpen ? "rotate-180" : ""
-                  }`}
+                  className={`w-4 h-4 transition-transform duration-200 ${isSubcategoryOpen ? "rotate-180" : ""
+                    }`}
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -348,6 +470,12 @@ const Category = () => {
             <>
               {t("categorySection.showing")} {currentProducts.length} {t("categorySection.of")} {totalItems}{" "}
               {t("categorySection.products")}
+              {selectedBrand !== (t("categorySection.brandDropdownName") || "All Brands") && (
+                <span>
+                  {" "}
+                  for <span className="text-amber-500">{selectedBrand}</span>
+                </span>
+              )}
               {selectedCategory !== t("categorySection.categoryDropdownName") && (
                 <span>
                   {" "}
@@ -417,11 +545,10 @@ const Category = () => {
               <button
                 onClick={() => handlePageChange(1)}
                 disabled={currentPage === 1}
-                className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors 
-                  ${
-                    currentPage === 1
-                      ? "text-gray-600 cursor-not-allowed"
-                      : "text-white hover:bg-gray-800"
+                className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors
+                  ${currentPage === 1
+                    ? "text-gray-600 cursor-not-allowed"
+                    : "text-white hover:bg-gray-800"
                   }`}
               >
                 <svg
@@ -444,11 +571,10 @@ const Category = () => {
               <button
                 onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
                 disabled={currentPage === 1}
-                className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors 
-                  ${
-                    currentPage === 1
-                      ? "text-gray-600 cursor-not-allowed"
-                      : "text-white hover:bg-gray-800"
+                className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors
+                  ${currentPage === 1
+                    ? "text-gray-600 cursor-not-allowed"
+                    : "text-white hover:bg-gray-800"
                   }`}
               >
                 <svg
@@ -471,11 +597,10 @@ const Category = () => {
                 <button
                   key={page}
                   onClick={() => handlePageChange(page)}
-                  className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${
-                    currentPage === page
-                      ? "bg-amber-500 text-black font-medium"
-                      : "text-white hover:bg-gray-800"
-                  }`}
+                  className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${currentPage === page
+                    ? "bg-amber-500 text-black font-medium"
+                    : "text-white hover:bg-gray-800"
+                    }`}
                 >
                   {page}
                 </button>
@@ -487,11 +612,10 @@ const Category = () => {
                   handlePageChange(Math.min(products?.data?.meta?.totalPage, currentPage + 1))
                 }
                 disabled={currentPage === products?.data?.meta?.totalPage}
-                className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors 
-                  ${
-                    currentPage === products?.data?.meta?.totalPage
-                      ? "text-gray-600 cursor-not-allowed"
-                      : "text-white hover:bg-gray-800"
+                className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors
+                  ${currentPage === products?.data?.meta?.totalPage
+                    ? "text-gray-600 cursor-not-allowed"
+                    : "text-white hover:bg-gray-800"
                   }`}
               >
                 <svg
@@ -513,11 +637,10 @@ const Category = () => {
               <button
                 onClick={() => handlePageChange(products?.data?.meta?.totalPage)}
                 disabled={currentPage === products?.data?.meta?.totalPage}
-                className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors 
-                  ${
-                    currentPage === products?.data?.meta?.totalPage
-                      ? "text-gray-600 cursor-not-allowed"
-                      : "text-white hover:bg-gray-800"
+                className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors
+                  ${currentPage === products?.data?.meta?.totalPage
+                    ? "text-gray-600 cursor-not-allowed"
+                    : "text-white hover:bg-gray-800"
                   }`}
               >
                 <svg

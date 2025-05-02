@@ -7,11 +7,11 @@ export const productApi = baseApi.injectEndpoints({
         // Construct the query string with params
         const { page = 1, limit = 10, categoryId, subCategoryId } = params;
         let queryString = `/product?page=${page}&limit=${limit}`;
-        
+
         // Add optional filter parameters if they exist
         if (categoryId) queryString += `&categoryId=${categoryId}`;
         if (subCategoryId) queryString += `&subCategoryId=${subCategoryId}`;
-        
+
         return queryString;
       },
       providesTags: ["product"],
@@ -28,10 +28,18 @@ export const productApi = baseApi.injectEndpoints({
       query: (id) => `/product/${id}`,
       providesTags: ["product"],
     }),
+
     allBrand: builder.query({
       query: () => "/brand",
       providesTags: ["product"],
     }),
+
+
+    getCategoryByBrandId: builder.query({
+      query: (id) => `/brand/${id}`,
+      providesTags: ["product"],
+    }),
+
 
     faq: builder.query({
       query: () => "/faq",
@@ -55,9 +63,9 @@ export const productApi = baseApi.injectEndpoints({
       invalidatesTags: ["product"],
     }),
 
-    
+
 
   }),
 });
 
-export const {  useGetAllProductsQuery , useCategoryQuery , useSubCategoryQuery , useProductDetailsQuery , useAllBrandQuery , useInquiryMutation , useContactMutation , useFaqQuery} = productApi;
+export const {  useGetAllProductsQuery , useCategoryQuery , useSubCategoryQuery , useProductDetailsQuery , useAllBrandQuery , useInquiryMutation , useContactMutation , useFaqQuery , useGetCategoryByBrandIdQuery} = productApi;
