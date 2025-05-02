@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { usePathname, useRouter } from "next/navigation";
-import { FaGlobe, FaBars, FaTimes } from "react-icons/fa";
-import { IoMdArrowDropdown } from "react-icons/io";
 import { useTranslations } from "next-intl";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { FaBars, FaGlobe, FaTimes } from "react-icons/fa";
+import { IoMdArrowDropdown } from "react-icons/io";
 
 const Header = () => {
   const pathname = usePathname();
@@ -16,7 +16,7 @@ const Header = () => {
   const menuButtonRef = useRef(null); // Add ref for the menu button
   const router = useRouter();
   const [locale, setLocale] = useState("");
-  const t = useTranslations("header");
+  const t = useTranslations("header", { timeZone: "UTC" });
 
   const navLinks = [
     { name: t("nav.home"), path: "/" },
@@ -80,7 +80,7 @@ const Header = () => {
       // Check if the click is outside both the menu and the menu button
       const isOutsideMenu = mobileMenuRef.current && !mobileMenuRef.current.contains(event.target);
       const isOutsideButton = menuButtonRef.current && !menuButtonRef.current.contains(event.target);
-      
+
       // Close language dropdown when clicking outside
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setLangOpen(false);
@@ -163,9 +163,8 @@ const Header = () => {
             <li key={name} className="relative">
               <button
                 onClick={() => handleNavClick(path)}
-                className={`hover:text-[#DA9E1F] transition cursor-pointer ${
-                  pathname === path ? "text-[#DA9E1F]" : "text-white"
-                }`}
+                className={`hover:text-[#DA9E1F] transition cursor-pointer ${pathname === path ? "text-[#DA9E1F]" : "text-white"
+                  }`}
                 aria-label={`Navigate to ${name}`}
               >
                 {name}
@@ -250,15 +249,14 @@ const Header = () => {
             >
               <FaTimes className="text-2xl" />
             </button>
-            
+
             <ul className="flex flex-col space-y-6 text-center">
               {navLinks.map(({ name, path }) => (
                 <li key={name}>
                   <button
                     onClick={() => handleNavClick(path)}
-                    className={`text-lg font-medium transition-colors duration-300 ${
-                      pathname === path ? "text-[#DA9E1F]" : "text-white"
-                    }`}
+                    className={`text-lg font-medium transition-colors duration-300 ${pathname === path ? "text-[#DA9E1F]" : "text-white"
+                      }`}
                   >
                     {name}
                   </button>
@@ -273,9 +271,8 @@ const Header = () => {
                   <button
                     key={lang.value}
                     onClick={() => handleLanguageChange(lang.value)}
-                    className={`flex flex-col items-center space-y-1 p-2 rounded-lg ${
-                      selectedLang === lang.value ? "bg-gray-800" : ""
-                    }`}
+                    className={`flex flex-col items-center space-y-1 p-2 rounded-lg ${selectedLang === lang.value ? "bg-gray-800" : ""
+                      }`}
                   >
                     <img
                       src={lang.flag}

@@ -470,7 +470,7 @@ const Category = () => {
             <>
               {t("categorySection.showing")} {currentProducts.length} {t("categorySection.of")} {totalItems}{" "}
               {t("categorySection.products")}
-              {selectedBrand !== (t("categorySection.brandDropdownName") || "All Brands") && (
+              {selectedBrand !== ("All Brands") && (
                 <span>
                   {" "}
                   for <span className="text-amber-500">{selectedBrand}</span>
